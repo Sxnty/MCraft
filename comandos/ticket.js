@@ -7,7 +7,7 @@ module.exports = {
         const {token} =require ('/Users/santi/Desktop/RivalsBot/config.json');
         let ticketespera = new RichEmbed()
         .setColor('RED')
-        .setTitle('Ticket de soporte')
+        .setTitle('ERROR')
         .addField('Algo salio mal :(', 'Usted ya tiene un ticket en espera')
         .setFooter('MCraft Copyright 2020');
         var userTickets = new Map();
@@ -19,13 +19,15 @@ module.exports = {
         });
         
         client.on('message', message => {
+
             if(message.author.bot) {
-                if(message.embeds.length === 1 && message.embeds[0].description.startsWith('Reacciona')) {
+                
+                if(message.embeds.length === 1 && message.embeds[0].title===('Soporte de ticket')){
                     message.react('🎫')
                     .then(msgReaction => console.log('Reacted.'))
                     .catch(err => console.log(err));
                 }
-                if(message.embeds.length === 1 && message.embeds[0].title === 'Ticket de soporte') {
+                if(message.embeds.length === 1 && message.embeds[0].title === ('Ticket de soporte')) {
                     message.react('❌')
                     .then(reaction => console.log("Reacted with " + reaction.emoji.name))
                     .catch(err => console.log(err));
@@ -34,6 +36,7 @@ module.exports = {
             if(message.content.toLowerCase() === '?sendmsg') {
                 const embed = new discord.RichEmbed();
                 embed.setAuthor(client.user.username, client.user.displayAvatarURL);
+                embed.setTitle('Soporte de ticket');
                 embed.setDescription('Reacciona a este mensaje para crear un ticket de soporte.');
                 embed.setColor('RED')
                 message.channel.send(embed);
@@ -133,7 +136,7 @@ module.exports = {
                 }
                 else if(reaction.message.guild.channels.some(channel => channel.name.toLowerCase() === user.username + 's-ticket')) {
                     let embed = new discord.RichEmbed();
-                    embed.setDescription("El ticket se cerrara en 5 segundos");
+                    embed.setDescription("the ticket close in five seconds");
                     reaction.message.channel.send(embed);
                     setTimeout(() => {
                         reaction.message.guild.channels.forEach(channel => {
