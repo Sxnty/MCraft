@@ -15,17 +15,17 @@ module.exports = {
         client.login(token);
         
         client.on('ready', () => {
-            console.log("Ticket Logead");
+            console.log("Ticket Logeado");
         });
         
         client.on('message', message => {
             if(message.author.bot) {
-                if(message.embed.length === 1 && message.embed[0].description.startsWith('Reacciona')) {
+                if(message.embeds.length === 1 && message.embeds[0].description.startsWith('Reacciona')) {
                     message.react('🎫')
                     .then(msgReaction => console.log('Reacted.'))
                     .catch(err => console.log(err));
                 }
-                if(message.embed.length === 1 && message.embed[0].title === 'Ticket de soporte') {
+                if(message.embeds.length === 1 && message.embeds[0].title === 'Ticket de soporte') {
                     message.react('❌')
                     .then(reaction => console.log("Reacted with " + reaction.emoji.name))
                     .catch(err => console.log(err));
