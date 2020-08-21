@@ -37,11 +37,20 @@ module.exports = {
         if (!reason) return message.channel.send(norazon)
     
         if(kickMember.hasPermission(["KICK_MEMBERS", "ADMINISTRATOR"])) return message.channel.send(nopermisobot)
+
+        //EMBED 
+        let sancionado = new RichEmbed()
+        .setTitle('MCraft')
+        .setColor('RED')
+        .addField('Fuiste sancionado en:', message.guild.name)
+        .addField("Sancion:", "kick")
+        .addField("Sancionado:", kickMember.user.username)
+        .addField("Ejecutor:", message.author.username)
+        .addField("Razon:", reason)
+
     
-        kickMember.send(`Hola, fuiste hechado de ${message.guild.name} por la razon: ${reason}`).then(() => 
+        kickMember.send(sancionado).then(() => 
         kickMember.kick()).catch(err => console.log(err))
-    
-        message.channel.send(`**${kickMember.user.tag}** has been kicked`).then(m => m.delete(5000))
     
                 //EMBED LOG
                 let log = new RichEmbed()
@@ -49,7 +58,6 @@ module.exports = {
                 .setTitle('Log de moderacion')
                 .setThumbnail(kickMember.user.avatarURL)
                 .addField("Sancion:", "kick")
-                .addField("Sancionado:", kickMember.user.username)
                 .addField("Ejecutor:", message.author.username)
                 .addField("Razon:", reason)
                 .addField("Fecha:", message.createdAt.toLocaleString())
